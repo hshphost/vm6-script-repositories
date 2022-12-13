@@ -193,6 +193,7 @@ CLIENT_DNS_2=${CLIENT_DNS_2}" >/etc/wireguard/params
 	# Add server interface
 	echo "[Interface]
 Address = ${SERVER_WG_IPV4}/24,${SERVER_WG_IPV6}/64
+MTU = 1420
 ListenPort = ${SERVER_PORT}
 PrivateKey = ${SERVER_PRIV_KEY}" >"/etc/wireguard/${SERVER_WG_NIC}.conf"
 
@@ -313,7 +314,8 @@ function newClient() {
 	echo "[Interface]
 PrivateKey = ${CLIENT_PRIV_KEY}
 Address = ${CLIENT_WG_IPV4}/32,${CLIENT_WG_IPV6}/128
-DNS = ${CLIENT_DNS_1},${CLIENT_DNS_2}
+MTU = 1384
+DNS = 1.1.1.1,8.8.8.8
 
 [Peer]
 PublicKey = ${SERVER_PUB_KEY}
