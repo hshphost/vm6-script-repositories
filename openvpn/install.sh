@@ -1,5 +1,7 @@
 #!/bin/bash
 #
+# Script for VMManager6 :)
+#
 # https://github.com/hwdsl2/openvpn-install
 #
 # Based on the work of Nyr and contributors at:
