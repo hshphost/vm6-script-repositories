@@ -1,17 +1,6 @@
 #!/bin/bash
-#
-# Script for VMManager6 :)
-#
-# https://github.com/hwdsl2/openvpn-install
-#
-# Based on the work of Nyr and contributors at:
-# https://github.com/Nyr/openvpn-install
-#
-# Copyright (c) 2022 Lin Song <linsongui@gmail.com>
-# Copyright (c) 2013-2022 Nyr
-#
-# Released under the MIT License, see the accompanying file LICENSE.txt
-# or https://opensource.org/licenses/MIT
+
+# Script autosetup OpenVPN for VMManager 6 :)
 
 exiterr()  { echo "Error: $1" >&2; exit 1; }
 exiterr2() { exiterr "'apt-get install' failed."; }

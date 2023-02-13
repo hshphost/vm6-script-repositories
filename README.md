@@ -1,1 +1,1 @@
-# Script for VMManager6 :)
+# Script and utils for hosting

@@ -1,33 +1,13 @@
 #!/bin/bash
-#############################################################################################################
-#Changelog                                                                                                  #
-#############################################################################################################
-#Added prompts for user input to configure script instead of relying on hardcoded settings.
-#Added a lot of errorchecking
-#The script is now optionally compatible with dash (this is the reason for there being a sed command at the end of every echo -e instance, dash liked to print the -e part when I was testing.)
-#Vastly improved compatibility across distributions
-#Special thanks to everyone who contributed here: https://gist.github.com/i3v/99f8ef6c757a5b8e9046b8a47f3a9d5b
-#Also extra special thanks to BAGELreflex on github for this: https://gist.github.com/BAGELreflex/c04e7a25d64e989cbd9376a9134b8f6d it made a huge difference to this improved version.
-#Added optimizations for 512k and 4k tests (they now use QSIZE instead of SIZE, it makes these tests a lot faster and doesn't affect accuracy much, assuming SIZE is appropriately configured for your drive.) 
-#Added option to not use legacy (512k and Q1T1 Seq R/W tests) to save time when testing.
-#Ensured the script can run fine without df installed now. Some information may be missing but worst case scenario it'll just look ugly.
-#Added a save results option that imitates the saved results from crystaldiskmark; the formatting is a little wonky but it checks out. Great for comparing results between operating systems.
-#Reconfigured results to use MegaBytes instead of MebiBytes (This is what crystaldiskmark uses so results should now be marginally closer).
-#Sequential read/write results (512k, q1t1 seq and q32t1 seq) will now appear as soon as they're finished and can be viewed while the 4k tests are running.
-#Note: The legacy test option defaults to no if nothing is selected, the result saving defaults to yes. It's easy to change if you don't like this.
-#Observation: When testing, I observed that the read results seemed mostly consistent with the results I got from crystaldiskmark on windows, however there's something off with the write results.
-#Sorry for the messy code :)
-#############################################################################################################
-#User input requests and error checking                                                                     #
-#############################################################################################################
-if [ -f /usr/bin/fio ]; then #Dependency check
+
+if [ -f /usr/bin/fio ]; then 
     :
 else
     echo -e "\033[1;31mError: This script requires fio to run, please make sure it is installed." | sed 's:-e::g'
     exit
 fi
 
-if [ -f /usr/bin/df ]; then #Dependency check
+if [ -f /usr/bin/df ]; then 
     nodf=0
 else
     nodf=1
@@ -38,7 +18,7 @@ if [ "$(ps -ocmd= | tail -1)" = "bash" ]; then
     echo "What drive do you want to test? (Default: $HOME on /dev/$(df $HOME | grep /dev | cut -d/ -f3 | cut -d" " -f1) )"
     echo -e "\033[0;33mOnly directory paths (e.g. /home/user/) are valid targets.\033[0;00m"
     read -e TARGET
-else #no autocomplete available for dash.
+else 
     echo "What drive do you want to test? (Default: $HOME on /dev/$(df $HOME | grep /dev | cut -d/ -f3 | cut -d" " -f1) )"
     echo -e "\033[0;33mOnly directory paths (e.g. /home/user/) are valid targets. Use bash if you want autocomplete.\033[0;00m" | sed 's:-e::g'
     read TARGET
@@ -123,7 +103,7 @@ if [ $nodf = 1 ]; then
 else
     DRIVE=$(df $TARGET | grep /dev | cut -d/ -f3 | cut -d" " -f1 | rev | cut -c 2- | rev)
 
-    if [ "$(echo $DRIVE | cut -c -4)" = "nvme" ]; then #NVME Compatibility
+    if [ "$(echo $DRIVE | cut -c -4)" = "nvme" ]; then 
         echo $DRIVE
         DRIVE=$(df $TARGET | grep /dev | cut -d/ -f3 | cut -d" " -f1 | rev | cut -c 3- | rev)
         echo $DRIVE
@@ -151,12 +131,8 @@ else
         exit
     fi
 fi
-#############################################################################################################
-#Setting the last Variables And Running Sequential R/W Benchmarks                                           #
-#############################################################################################################
 
-
-QSIZE=$(($SIZE / 32)) #Size of Q32Seq tests
+QSIZE=$(($SIZE / 32))
 SIZE=$(echo $SIZE)m
 QSIZE=$(echo $QSIZE)m
 
@@ -219,10 +195,6 @@ Results:
 Sequential Q32T1 Read: $SEQ32R
 Sequential Q32T1 Write: $SEQ32W" | sed 's:-e::g'
 fi
-
-#############################################################################################################
-#4KiB Tests & Results                                                                                       #
-#############################################################################################################
 
 fio --loops=$LOOPS --size=$QSIZE --filename="$TARGET/.fiomark-4k.tmp" --stonewall --ioengine=libaio --direct=1 --zero_buffers=$WRITEZERO --output-format=json \
   --name=4kread --bs=4k --iodepth=1 --numjobs=1 --rw=randread \
