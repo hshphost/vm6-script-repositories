@@ -1,6 +1,6 @@
 #/bin/bash
 
-# Script for swap magnifications, made by XorekCloud and Hasan Hosting Company. The main goal is overselling for node :(
+# Script for swap magnifications, made by XorekCloud for Hasanbek. The main goal is overselling for node :(
 
 sudo dnf install util-linux -y
 
