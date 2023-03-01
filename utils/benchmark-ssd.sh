@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Note to self: bash <(wget -O- https://raw.githubusercontent.com/hshphost/vm6-script-repositories/main/utils/benchmark-ssd.sh)
+
 if [ -f /usr/bin/fio ]; then 
     :
 else
