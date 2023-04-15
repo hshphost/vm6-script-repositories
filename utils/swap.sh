@@ -12,3 +12,14 @@ sudo mkswap /swap-space/swapfile
 sudo swapon /swap-space/swapfile
 
 sudo echo -e "\n/swap-space/swapfile swap swap defaults 0" >> /etc/fstab
+
+
+# 128G swap, idk
+
+#sudo mkdir /swap-space
+#sudo fallocate -l 64G /swap-space/swapfile2
+#sudo chmod 600 /swap-space/swapfile2
+#sudo mkswap /swap-space/swapfile2
+#sudo swapon /swap-space/swapfile2
+
+#sudo echo -e "\n/swap-space/swapfile2 swap swap defaults 0" >> /etc/fstab
