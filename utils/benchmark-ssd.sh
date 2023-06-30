@@ -238,8 +238,6 @@ Saving at $HOME/$DRIVE$(date +%F%I%M%S).txt
     if [ "$LEGACY" = "Y" ] || [ "$LEGACY" = "y" ]; then
 echo "-----------------------------------------------------------------------
 Flexible I/O Tester - $(fio --version) (C) axboe
-                          Fio Github : https://github.com/axboe/fio
-                       Script Source : https://unix.stackexchange.com/a/480191/72554
 -----------------------------------------------------------------------
 * MB/s = 1,000,000 bytes/s
 * KB = 1000 bytes, KiB = 1024 bytes
@@ -264,8 +262,6 @@ Flexible I/O Tester - $(fio --version) (C) axboe
     else
 echo "-----------------------------------------------------------------------
 Flexible I/O Tester - $(fio --version) (C) axboe
-                          Fio Github : https://github.com/axboe/fio
-                       Script Source : https://unix.stackexchange.com/a/480191/72554
 -----------------------------------------------------------------------
 * MB/s = 1,000,000 bytes/s
 * KB = 1000 bytes, KiB = 1024 bytes
