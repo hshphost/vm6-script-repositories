@@ -398,10 +398,11 @@ AllowedIPs = 10.7.0.$octet/32$(grep -q 'fddd:2c4:2c4:2c4::1' /etc/wireguard/wg0.
 # END_PEER $client
 EOF
 	# Create client configuration
+	# #MTU = 1384
 	cat << EOF > "$export_dir$client".conf
 [Interface]
 Address = 10.7.0.$octet/24$(grep -q 'fddd:2c4:2c4:2c4::1' /etc/wireguard/wg0.conf && echo ", fddd:2c4:2c4:2c4::$octet/64")
-MTU = 1384
+MTU = 1332
 DNS = $dns
 PrivateKey = $key
 
@@ -641,6 +642,7 @@ if [[ ! -e /etc/wireguard/wg0.conf ]]; then
 		)
 	fi
 	# Generate wg0.conf
+	# MTU = 1420
 	cat << EOF > /etc/wireguard/wg0.conf
 # Do not alter the commented lines
 # They are used by wireguard-install
@@ -648,7 +650,7 @@ if [[ ! -e /etc/wireguard/wg0.conf ]]; then
 
 [Interface]
 Address = 10.7.0.1/24$([[ -n "$ip6" ]] && echo ", fddd:2c4:2c4:2c4::1/64")
-MTU = 1420
+MTU = 1368
 PrivateKey = $(wg genkey)
 ListenPort = $port
 
